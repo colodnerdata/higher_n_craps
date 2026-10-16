@@ -8,9 +8,12 @@ from higher_n_craps import (
     GameState,
     IdleCrapsGame,
     cumulative_probability,
+    format_probability_odds,
+    odds_to_probability,
     outcome_distribution,
     probability_fraction,
     probability_of_total,
+    probability_to_odds,
 )
 
 
@@ -34,6 +37,15 @@ def test_probability_of_total_for_arbitrary_dice() -> None:
     assert probability_of_total(3, 10) == pytest.approx(27 / 216)
     assert probability_of_total(1, 6) == pytest.approx(1 / 6)
     assert cumulative_probability(2, 4, 7) == pytest.approx(1 / 2)
+
+
+def test_probability_odds_formatting_helpers() -> None:
+    assert probability_to_odds(1 / 3) == (2, 1)
+    assert probability_to_odds(1 / 6) == (5, 1)
+    assert format_probability_odds(1 / 3) == "2:1"
+    assert format_probability_odds(1 / 6) == "5:1"
+    assert odds_to_probability("2:1") == Fraction(1, 3)
+    assert odds_to_probability((5, 1)) == Fraction(1, 6)
 
 
 def test_exact_probability_fraction() -> None:

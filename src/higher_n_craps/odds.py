@@ -6,6 +6,68 @@ from collections import defaultdict
 from fractions import Fraction
 
 
+def _coerce_probability(probability: float | Fraction) -> Fraction:
+    """Normalize a probability-like value into a reduced Fraction."""
+    if isinstance(probability, Fraction):
+        value = probability
+    else:
+        value = Fraction(str(probability)).limit_denominator()
+
+    if not 0 <= value <= 1:
+        raise ValueError("probability must be between 0 and 1 inclusive")
+    return value
+
+
+def probability_to_odds(probability: float | Fraction) -> tuple[int, int]:
+    """Convert a success probability into inverse payout odds.
+
+    Examples
+    --------
+    A 1/3 chance of success corresponds to 2:1 odds against the event, so the
+    payout notation is expressed as a numerator and denominator pair with the
+    losing side first.
+    """
+    value = _coerce_probability(probability)
+    if value == 1:
+        return (0, 1)
+    if value == 0:
+        return (1, 0)
+
+    odds = (1 - value) / value
+    reduced = odds.limit_denominator()
+    return (reduced.numerator, reduced.denominator)
+
+
+def format_probability_odds(probability: float | Fraction) -> str:
+    """Format a probability as a payout-style inverse odds string."""
+    numerator, denominator = probability_to_odds(probability)
+    if denominator == 0:
+        return "0:1"
+    return f"{numerator}:{denominator}"
+
+
+def odds_to_probability(odds: str | tuple[int, int]) -> Fraction:
+    """Convert a payout-style odds string or pair back to a probability."""
+    if isinstance(odds, str):
+        text = odds.strip()
+        if ":" not in text:
+            raise ValueError("odds must be in 'A:B' format")
+        numerator, denominator = (part.strip() for part in text.split(":", 1))
+        left = int(numerator)
+        right = int(denominator)
+    else:
+        left, right = odds
+
+    if right < 0 or left < 0:
+        raise ValueError("odds must be non-negative")
+    if right == 0:
+        return Fraction(1, 1)
+    if left == 0:
+        return Fraction(0, 1)
+
+    return Fraction(right, left + right)
+
+
 def outcome_distribution(num_dice: int, faces: int = 6) -> dict[int, int]:
     """Return the count of each sum for a pool of identically-sized dice.
 
