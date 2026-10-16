@@ -18,4 +18,17 @@ design change.
 - **Why:** the tradeoff and important alternative.
 - **Revisit when:** evidence or a changed condition that would alter the choice.
 
-No project-specific decisions have been recorded yet.
+## 2026-10-16 — Arbitrary-dice probability model
+
+- **Status:** accepted
+- **Context:** the project needs an idle progression game for craps-style
+  tables, but the rules should work for any number of dice rather than only a
+  classic 2-dice model.
+- **Decision:** keep the probability logic in a separate `odds` module and make
+  the progression state reference those values instead of embedding rules in the
+  UI or save layer.
+- **Why:** this keeps the math transparent, allows exact rational probabilities,
+  and keeps future upgrades or rule variants easy to add without reworking the
+  whole game loop.
+- **Revisit when:** the game needs more complex rules, such as point-based bets,
+  multiple tables, or nonstandard dice faces.

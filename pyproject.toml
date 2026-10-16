@@ -3,9 +3,9 @@ requires = ["hatchling>=1.26,<2"]
 build-backend = "hatchling.build"
 
 [project]
-name = "project-name"
+name = "higher-n-craps"
 version = "0.1.0"
-description = "Replace with a one-sentence project description"
+description = "Idle progression framework for arbitrary-dice craps odds"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
@@ -18,7 +18,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/project_name"]
+packages = ["src/higher_n_craps", "src/project_name"]
 
 [tool.poe.env]
 UV_LOCKED = "1"

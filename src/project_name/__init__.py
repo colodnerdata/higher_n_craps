@@ -1,1 +1,3 @@
-"""Replace this description with the package's purpose."""
+"""Compatibility shim for the higher_n_craps package."""
+
+from higher_n_craps import *  # noqa: F401,F403

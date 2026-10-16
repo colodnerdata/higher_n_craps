@@ -1,11 +1,11 @@
 # Next
 
-Keep this page short and current. Replace obsolete notes instead of appending
-a diary. Link to an issue when it owns the detail.
-
-- **Current goal:** TODO — define the first useful outcome.
-- **Working state:** starter only; no application behavior implemented.
-- **Next action:** complete TEMPLATE_SETUP.md, then implement one small feature
-  with an observable result and a meaningful test.
+- **Current goal:** package the idle craps odds framework and validate the
+  arbitrary-dice probability model with a small progression API.
+- **Working state:** the core odds engine and idle game state are implemented,
+  with focused tests for totals, ranges, and progression.
+- **Next action:** run the repo’s CI check and confirm the package imports from
+  a clean environment.
 - **Blocked by:** none recorded.
-- **Later:** add only a few items that should survive the next session.
+- **Later:** add a richer progression loop or save-state tooling only when the
+  core model is stable.
